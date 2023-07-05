@@ -13,3 +13,27 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
 }
+
+gradlePlugin {
+    plugins {
+        register("androidApplication") {
+            id = "amazingmovie.android.application"
+            implementationClass = "AndroidApplicationConventionPlugin"
+        }
+
+        register("androidKotlin") {
+            id = "amazingmovie.jetbrains.kotlin.android"
+            implementationClass = "AndroidKotlinConventionPlugin"
+        }
+
+        register("androidLibrary") {
+            id = "amazingmovie.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+
+        register("androidCompose") {
+            id = "amazingmoview.android.compose"
+            implementationClass = "AndroidComposeConventionPlugin"
+        }
+    }
+}
