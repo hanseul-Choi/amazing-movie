@@ -35,5 +35,10 @@ gradlePlugin {
             id = "amazingmovie.android.compose"
             implementationClass = "AndroidComposeConventionPlugin"
         }
+
+        register("androidHilt") {
+            id = "amazingmovie.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
     }
 }
