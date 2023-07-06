@@ -18,3 +18,5 @@ dependencyResolutionManagement {
 rootProject.name = "AmazingMovie"
 include(":app")
 include(":core:designsystem")
+include(":feature:test1")
+include(":feature:test2")
