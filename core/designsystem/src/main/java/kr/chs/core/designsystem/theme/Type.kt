@@ -1,4 +1,4 @@
-package kr.chs.amazingmovie.ui.theme
+package kr.chs.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

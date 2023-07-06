@@ -1,4 +1,4 @@
-package kr.chs.amazingmovie.ui.theme
+package kr.chs.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
