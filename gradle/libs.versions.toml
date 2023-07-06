@@ -1,10 +1,21 @@
 [versions]
+androidxActivityCompose = "1.5.1"
+androidxCoreKtx = "1.8.0"
+androidxComposeBom = "2022.10.00"
+androidxComposeCompiler = "1.4.1"
 androidGradlePlugin = "7.4.2"
-kotlinAndroid = "1.7.20"
-kotlinJvm = "1.7.20"
+androidxLifecycle = "2.3.1"
+kotlinAndroid = "1.8.0"
+kotlinJvm = "1.8.0"
 
 [libraries]
 
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivityCompose"}
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 # dependencies of build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }

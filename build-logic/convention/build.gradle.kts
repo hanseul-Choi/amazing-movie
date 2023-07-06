@@ -32,7 +32,7 @@ gradlePlugin {
         }
 
         register("androidCompose") {
-            id = "amazingmoview.android.compose"
+            id = "amazingmovie.android.compose"
             implementationClass = "AndroidComposeConventionPlugin"
         }
     }
