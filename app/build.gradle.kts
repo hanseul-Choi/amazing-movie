@@ -25,6 +25,8 @@ android {
 
 dependencies {
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:test1"))
+    implementation(project(":feature:test2"))
 
     implementation(libs.androidx.core.ktx)
 //    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
@@ -34,6 +36,7 @@ dependencies {
 //    implementation("androidx.compose.ui:ui")
 //    implementation("androidx.compose.ui:ui-graphics")
     implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.navigation.compose)
 //    implementation(libs.androidx.compose.material3)
 //    testImplementation("junit:junit:4.13.2")
 //    androidTestImplementation("androidx.test.ext:junit:1.1.5")
