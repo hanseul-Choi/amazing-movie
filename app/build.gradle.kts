@@ -25,8 +25,9 @@ android {
 
 dependencies {
     implementation(project(":core:designsystem"))
-    implementation(project(":feature:test1"))
-    implementation(project(":feature:test2"))
+    implementation(project(":feature:movielist"))
+    implementation(project(":feature:search"))
+    implementation(project(":feature:favorite"))
 
     implementation(libs.androidx.core.ktx)
 //    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))

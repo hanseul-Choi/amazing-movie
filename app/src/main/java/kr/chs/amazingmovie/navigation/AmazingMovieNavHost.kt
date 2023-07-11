@@ -6,8 +6,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
-import kr.chs.feature.test1.navigation.test1Screen
-import kr.chs.feature.test2.navigation.test2Screen
+import kr.chs.feature.search.navigation.searchScreen
+import kr.chs.feature.movielist.navigation.movieListScreen
+import kr.chs.feature.favorite.navigation.favoriteScreen
 
 @Composable
 internal fun AmazingMovieNavHost(
@@ -20,9 +21,10 @@ internal fun AmazingMovieNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = TopLevelDestination.Test1.route,
+        startDestination = TopLevelDestination.MovieList.route,
     ) {
-        test1Screen()
-        test2Screen()
+        searchScreen()
+        movieListScreen()
+        favoriteScreen()
     }
 }
