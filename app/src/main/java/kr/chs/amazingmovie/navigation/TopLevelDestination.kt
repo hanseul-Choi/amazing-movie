@@ -32,8 +32,8 @@ enum class TopLevelDestination(
 
     Favorite(
         favoriteNavigationRoute,
-        ImageVectorIcon(AppIcons.Favorite),
         ImageVectorIcon(AppIcons.FavoriteFilled),
+        ImageVectorIcon(AppIcons.Favorite),
         FavoriteR.string.favorite_icon_text
     )
 }
