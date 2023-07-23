@@ -10,6 +10,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -86,12 +88,31 @@ fun RowScope.AmazingMovieNavigationBarItem(
                 text = stringResource(id = labelId)
             )
         },
-        alwaysShowLabel = alwaysShowLabel
+        alwaysShowLabel = alwaysShowLabel,
+        colors = NavigationBarItemDefaults.colors(
+            selectedIconColor = AmazingMovieNavigationDefaults.navigationSelectedIconColor(),
+            unselectedIconColor = AmazingMovieNavigationDefaults.navigationContentColor(),
+            selectedTextColor = AmazingMovieNavigationDefaults.navigationSelectedIconColor(),
+            unselectedTextColor = AmazingMovieNavigationDefaults.navigationContentColor(),
+            indicatorColor = AmazingMovieNavigationDefaults.navigationIndicatorColor()
+        )
     )
 }
 
-private object AmazingMovieNavigationDefaults {
+object AmazingMovieNavigationDefaults {
     val navigationBackgroundColor = @Composable {
         MaterialTheme.colorScheme.surface
+    }
+
+    val navigationContentColor = @Composable {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    }
+
+    val navigationSelectedIconColor = @Composable {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    }
+
+    val navigationIndicatorColor = @Composable {
+        MaterialTheme.colorScheme.primaryContainer
     }
 }
