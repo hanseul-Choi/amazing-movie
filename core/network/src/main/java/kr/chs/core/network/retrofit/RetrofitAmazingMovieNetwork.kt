@@ -2,7 +2,7 @@ package kr.chs.core.network.retrofit
 
 import kr.chs.core.network.AmazingMovieNetworkDataSource
 import kr.chs.core.network.BuildConfig
-import kr.chs.core.network.model.BasePagingModel
+import kr.chs.core.network.model.BasePagingNetworkModel
 import kr.chs.core.network.model.NetworkMovie
 import okhttp3.Call
 import retrofit2.Retrofit
@@ -16,7 +16,7 @@ private interface RetrofitAmazingMovieApi {
     @GET("3/search/movie")
     suspend fun getMovies(
         @Query("keyword") keyword: String
-    ) : List<BasePagingModel<NetworkMovie>>
+    ) : List<BasePagingNetworkModel<NetworkMovie>>
 }
 
 private const val amazingMovieBaseUrl = BuildConfig.MOVIE_BASE_URL
@@ -32,6 +32,6 @@ class RetrofitAmazingMovieNetwork @Inject constructor(
         .build()
         .create(RetrofitAmazingMovieApi::class.java)
 
-    override suspend fun getMovies(keyword: String): List<BasePagingModel<NetworkMovie>> =
+    override suspend fun getMovies(keyword: String): List<BasePagingNetworkModel<NetworkMovie>> =
         networkApi.getMovies(keyword)
 }
