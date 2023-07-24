@@ -20,4 +20,5 @@ secrets {
 dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson.converter)
+    implementation(libs.okhttp.logging)
 }
