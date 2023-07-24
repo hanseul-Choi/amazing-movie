@@ -2,6 +2,7 @@ plugins {
     id("amazingmovie.android.application")
     id("amazingmovie.android.compose")
     id("amazingmovie.jetbrains.kotlin.android")
+    id("amazingmovie.android.hilt")
 }
 
 android {
