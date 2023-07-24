@@ -10,6 +10,7 @@ kotlinAndroid = "1.8.0"
 kotlinJvm = "1.8.0"
 hilt = "2.44"
 retrofit = "2.9.0"
+secrets = "2.0.1"
 
 [libraries]
 
@@ -37,3 +38,4 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroid" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinJvm" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
