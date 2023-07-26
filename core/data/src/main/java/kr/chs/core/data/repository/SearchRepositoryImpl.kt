@@ -8,7 +8,7 @@ import kr.chs.core.model.data.Movie
 import kr.chs.core.model.data.base.BasePagingModel
 import javax.inject.Inject
 
-class NetworkSearchRepository @Inject constructor(
+class SearchRepositoryImpl @Inject constructor(
     private val networkDataSource: AmazingMovieNetworkDataSource
 ) : SearchRepository {
 
