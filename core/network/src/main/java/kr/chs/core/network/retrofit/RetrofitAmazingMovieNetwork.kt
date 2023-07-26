@@ -1,5 +1,8 @@
 package kr.chs.core.network.retrofit
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kr.chs.core.network.AmazingMovieNetworkDataSource
 import kr.chs.core.network.BuildConfig
 import kr.chs.core.network.model.BasePagingNetworkModel
@@ -23,7 +26,8 @@ private const val amazingMovieBaseUrl = BuildConfig.MOVIE_BASE_URL
 
 @Singleton
 class RetrofitAmazingMovieNetwork @Inject constructor(
-    okHttpCallFactory: Call.Factory
+    okHttpCallFactory: Call.Factory,
+    private val refreshIntervalMs: Long = 5000,
 ): AmazingMovieNetworkDataSource {
     private val networkApi = Retrofit.Builder()
         .baseUrl(amazingMovieBaseUrl)
@@ -32,6 +36,12 @@ class RetrofitAmazingMovieNetwork @Inject constructor(
         .build()
         .create(RetrofitAmazingMovieApi::class.java)
 
-    override suspend fun getMovies(keyword: String): List<BasePagingNetworkModel<NetworkMovie>> =
-        networkApi.getMovies(keyword)
+    override suspend fun getMovies(keyword: String): Flow<List<BasePagingNetworkModel<NetworkMovie>>> =
+        flow {
+            while(true) {
+                val movieData = networkApi.getMovies(keyword)
+                emit(movieData)
+                delay(refreshIntervalMs)
+            }
+        }
 }
