@@ -1,8 +1,10 @@
 package kr.chs.core.network.retrofit
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kr.chs.core.network.AmazingMovieNetworkDataSource
 import kr.chs.core.network.BuildConfig
 import kr.chs.core.network.model.BasePagingNetworkModel
@@ -43,5 +45,5 @@ class RetrofitAmazingMovieNetwork @Inject constructor(
                 emit(movieData)
                 delay(refreshIntervalMs)
             }
-        }
+        }.flowOn(Dispatchers.IO)
 }
