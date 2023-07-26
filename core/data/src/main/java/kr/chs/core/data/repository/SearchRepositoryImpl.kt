@@ -12,8 +12,8 @@ class SearchRepositoryImpl @Inject constructor(
     private val networkDataSource: AmazingMovieNetworkDataSource
 ) : SearchRepository {
 
-    // Todo: UI data로의 변환은 domain layer에서 처리하자
-    // Repository에서는 data들이 한번에 모일 때, 알맞는 model로 변환해주는 역할만 수행
+    // Repository에서는 data들이 한번에 모일 때, 알맞는 model로 변환해주는 역할 수행
+    // UI data는 model 모듈에서 책임, 혹시나 model의 data의 변환이 필요할 때, domain layer에서 변환
     override suspend fun geMovies(keyword: String): Flow<List<BasePagingModel<Movie>>> =
         networkDataSource.getMovies(keyword).map { flowData ->
             flowData.map { basePagingData ->
