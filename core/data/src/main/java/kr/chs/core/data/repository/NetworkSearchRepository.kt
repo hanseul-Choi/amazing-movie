@@ -12,6 +12,7 @@ class NetworkSearchRepository @Inject constructor(
     private val networkDataSource: AmazingMovieNetworkDataSource
 ) : SearchRepository {
 
+    // Todo: UI data로의 변환은 domain layer에서 처리하자
     override suspend fun geMovies(keyword: String): Flow<List<BasePagingModel<Movie>>> =
         networkDataSource.getMovies(keyword).map { flowData ->
             flowData.map { basePagingData ->
