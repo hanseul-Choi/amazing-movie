@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kr.chs.core.data.model.asMovie
 import kr.chs.core.network.AmazingMovieNetworkDataSource
-import kr.chs.cpre.model.data.Movie
-import kr.chs.cpre.model.data.base.BasePagingModel
+import kr.chs.core.model.data.Movie
+import kr.chs.core.model.data.base.BasePagingModel
 import javax.inject.Inject
 
 class NetworkSearchRepository @Inject constructor(

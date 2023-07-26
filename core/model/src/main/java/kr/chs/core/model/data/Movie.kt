@@ -1,4 +1,4 @@
-package kr.chs.cpre.model.data
+package kr.chs.core.model.data
 
 // ui에 필요한 변수만 가져오기
 data class Movie(

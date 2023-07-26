@@ -1,7 +1,7 @@
 package kr.chs.core.data.model
 
 import kr.chs.core.network.model.NetworkMovie
-import kr.chs.cpre.model.data.Movie
+import kr.chs.core.model.data.Movie
 
 fun NetworkMovie.asMovie() = Movie(
     id = id,
