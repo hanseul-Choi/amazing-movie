@@ -21,8 +21,8 @@ object NetworkModule {
     annotation class TMDB
 
     // API_TOKEN Interceptor
-    @Provides
     @TMDB
+    @Provides
     fun provideTMDBTokenInterceptor() : Interceptor = Interceptor { chain ->
         with(chain) {
             val newRequest = request().newBuilder()
@@ -35,9 +35,8 @@ object NetworkModule {
     // default : No Log
     @Provides
     @Singleton
-    @TMDB
     fun provideHttpCallFactory(
-        tmdbInterceptor: Interceptor
+        @TMDB tmdbInterceptor: Interceptor
     ) : Call.Factory = OkHttpClient.Builder()
         .addInterceptor(tmdbInterceptor)
         .addInterceptor(
