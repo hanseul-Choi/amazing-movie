@@ -16,6 +16,10 @@ import kr.chs.core.model.data.Movie
 import kr.chs.core.model.data.base.BasePagingModel
 import javax.inject.Inject
 
+/**
+ *  검색어 입력할 때 마다 바로 랜더링으로 표현하는건 어떤가?
+ *  일단 검색 버튼으로 진행?
+ */
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository
@@ -33,7 +37,11 @@ class SearchViewModel @Inject constructor(
             .map { searchResponse ->
                 when(searchResponse) {
                     is Result.Success -> {
-                        _searchUiState.value =  SearchUiState.Success(movie = searchResponse.data)
+                        _searchUiState.value = if(searchResponse.data.isNullOrEmpty()) {
+                            SearchUiState.Empty
+                        } else {
+                            SearchUiState.Success(movie = searchResponse.data)
+                        }
                     }
                     is Result.Loading -> {
                         _searchUiState.value = SearchUiState.Loading
