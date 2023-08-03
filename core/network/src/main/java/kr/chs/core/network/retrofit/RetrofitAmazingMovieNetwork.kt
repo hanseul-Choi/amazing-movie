@@ -36,7 +36,7 @@ class RetrofitAmazingMovieNetwork @Inject constructor(
         .build()
         .create(RetrofitAmazingMovieApi::class.java)
 
-    override suspend fun getMovies(keyword: String): Flow<List<BasePagingNetworkModel<NetworkMovie>>> =
+    override fun getMovies(keyword: String): Flow<List<BasePagingNetworkModel<NetworkMovie>>> =
         flow {
             val movieData = networkApi.getMovies(keyword)
             emit(movieData)

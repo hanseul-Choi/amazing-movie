@@ -5,5 +5,7 @@ import kr.chs.core.model.data.Movie
 import kr.chs.core.model.data.base.BasePagingModel
 
 interface SearchRepository {
-    suspend fun geMovies(keyword: String): Flow<List<BasePagingModel<Movie>>>
+    val movieData: Flow<Movie>
+
+    fun getMovies(keyword: String): Flow<List<BasePagingModel<Movie>>>
 }

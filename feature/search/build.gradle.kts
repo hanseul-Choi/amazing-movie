@@ -12,9 +12,12 @@ android {
 dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:model"))
+    implementation(project(":core:common"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 }
