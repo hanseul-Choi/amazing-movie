@@ -1,11 +1,7 @@
 package kr.chs.feature.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -29,15 +25,13 @@ class SearchViewModel @Inject constructor(
     private val _searchUiState = MutableStateFlow<SearchUiState>(SearchUiState.Empty)
     val searchUiState: StateFlow<SearchUiState> = _searchUiState
 
-    private fun searchMovieData(keyword: String) {
-        _searchUiState.value = SearchUiState.Loading
-
+    private fun searchMovies(keyword: String) {
         searchRepository.getMovies(keyword)
             .asResult()
             .map { searchResponse ->
                 when(searchResponse) {
                     is Result.Success -> {
-                        _searchUiState.value = if(searchResponse.data.isNullOrEmpty()) {
+                        _searchUiState.value = if(searchResponse.data.isEmpty()) {
                             SearchUiState.Empty
                         } else {
                             SearchUiState.Success(movie = searchResponse.data)
