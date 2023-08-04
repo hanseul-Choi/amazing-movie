@@ -3,6 +3,7 @@ androidxActivityCompose = "1.5.1"
 androidxCoreKtx = "1.8.0"
 androidxComposeBom = "2022.10.00"
 androidxComposeCompiler = "1.4.1"
+androidxHiltNavigationCompose = "1.0.0"
 androidxNavigation = "2.5.3"
 androidGradlePlugin = "7.4.2"
 androidxLifecycle = "2.6.0-alpha05"
@@ -28,6 +29,7 @@ androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "li
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
