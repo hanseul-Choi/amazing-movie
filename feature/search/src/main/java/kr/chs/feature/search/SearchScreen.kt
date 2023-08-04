@@ -10,6 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
+internal fun SearchRoute() {
+
+}
+
+@Composable
 internal fun SearchScreen(
     viewModel: SearchViewModel
 ) {
