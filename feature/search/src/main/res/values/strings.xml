@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="search_icon_text">검색</string>
+
+    <string name="search_hint_text">키워드를 입력해주세요(ex. batman)</string>
+    <string name="search_description_text">검색 버튼 아이콘</string>
 </resources>

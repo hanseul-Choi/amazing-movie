@@ -1,9 +1,15 @@
 package kr.chs.feature.search
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsTopHeight
@@ -11,14 +17,33 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Button
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kr.chs.core.designsystem.icon.AppIcons
 import kr.chs.core.model.data.Movie
 
 @Composable
@@ -32,7 +57,7 @@ internal fun SearchRoute(
     SearchScreen(
         onSearchClick = viewModel::onSearchQueryChanged,
         searchUiState = searchUiState,
-        searchKeyword = searchQueryState,
+        searchQueryState = searchQueryState,
     )
 }
 
@@ -41,17 +66,19 @@ internal fun SearchScreen(
     modifier: Modifier = Modifier,
     onSearchClick: (String) -> Unit = {},
     searchUiState: SearchUiState,
-    searchKeyword: String = "",
+    searchQueryState: String = "",
 ) {
     val state = rememberLazyListState()
 
     Column(modifier = modifier) {
-        // Todo : SearchBar 구현
-        Button(
-            onClick = {onSearchClick("test")},
-        ) {
-            Text(text = "search button")
-        }
+        Spacer(
+            modifier = Modifier.height(16.dp)
+        )
+
+        // Todo : SearchTopBar 구현 - toss 검색 부분 참고
+        SearchTopBar(
+            onSearchClick = onSearchClick,
+        )
 
         // Todo : 이 부분은 SearchResultBody로 표현 -> EmptySearchResultBody, SearchResultBody, SearchNotReadyBody
         LazyColumn(
@@ -91,6 +118,61 @@ internal fun SearchScreen(
                 )
             }
         }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+@Composable
+private fun SearchTopBar(
+    onSearchClick: (String) -> Unit,
+) {
+    var text by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .clip(RoundedCornerShape(16.dp)),
+            placeholder = {
+                Text(
+                    text = stringResource(id = R.string.search_hint_text),
+                    color = Color.DarkGray,
+                )
+            },
+            leadingIcon = {
+                IconButton(
+                    onClick = { onSearchClick(text) },
+                ) {
+                    Icon(
+                        imageVector = AppIcons.SearchBar,
+                        contentDescription = stringResource(
+                            id = R.string.search_hint_text
+                        ),
+                    )
+                }
+            },
+            colors = TextFieldDefaults.textFieldColors( // Todo : Theme를 통해 Color 변경
+                containerColor = Color.LightGray,
+                focusedIndicatorColor = Color.DarkGray,
+                unfocusedIndicatorColor = Color.LightGray,
+            ),
+            value = text,
+            onValueChange = { text = it },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(onSearch = {
+                onSearchClick(text)
+
+                keyboardController?.hide()
+                focusManager.clearFocus()
+            }),
+        )
     }
 }
 

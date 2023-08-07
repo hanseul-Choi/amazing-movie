@@ -2,6 +2,7 @@ package kr.chs.core.designsystem.icon
 
 import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.List
@@ -17,7 +18,7 @@ object AppIcons {
     val SearchFilled = Icons.Rounded.Search
     val List = Icons.Outlined.List
     val ListFilled = Icons.Rounded.List
-
+    val SearchBar = Icons.Default.Search
 }
 
 sealed class IconWrapper {
