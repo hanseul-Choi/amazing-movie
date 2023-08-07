@@ -1,6 +1,7 @@
 package kr.chs.feature.search
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.safeDrawing
@@ -44,47 +45,51 @@ internal fun SearchScreen(
 ) {
     val state = rememberLazyListState()
 
-    Button(
-        onClick = {onSearchClick("test")},
-    ) {
-        Text(text = "search button")
-    }
-
-    LazyColumn(
-        state = state,
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        item {// question: 이걸 넣는 이유?
-            Spacer(
-                modifier = Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing)
-            )
+    Column(modifier = modifier) {
+        // Todo : SearchBar 구현
+        Button(
+            onClick = {onSearchClick("test")},
+        ) {
+            Text(text = "search button")
         }
 
-        when(searchUiState) {
-            SearchUiState.Empty -> {
-                Log.d("searchState", "searchState is Empty")
-            }
-
-            SearchUiState.Loading -> {
-                Log.d("searchState", "searchState is Loading")
-            }
-
-            is SearchUiState.Success -> { // question : 왜 is를 붙여야하지?
-                TestBody(
-                    items = searchUiState.movie.results
+        // Todo : 이 부분은 SearchResultBody로 표현 -> EmptySearchResultBody, SearchResultBody, SearchNotReadyBody
+        LazyColumn(
+            state = state,
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {// question: 이걸 넣는 이유?
+                Spacer(
+                    modifier = Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing)
                 )
             }
 
-            SearchUiState.Error -> {
-                Log.d("searchState", "searchState is Error")
-            }
-        }
+            when(searchUiState) {
+                SearchUiState.Empty -> {
+                    Log.d("searchState", "searchState is Empty")
+                }
 
-        item {
-            Spacer(
-                modifier = Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing)
-            )
+                SearchUiState.Loading -> {
+                    Log.d("searchState", "searchState is Loading")
+                }
+
+                is SearchUiState.Success -> { // question : 왜 is를 붙여야하지?
+                    TestBody(
+                        items = searchUiState.movie.results
+                    )
+                }
+
+                SearchUiState.Error -> {
+                    Log.d("searchState", "searchState is Error")
+                }
+            }
+
+            item {
+                Spacer(
+                    modifier = Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing)
+                )
+            }
         }
     }
 }
