@@ -6,5 +6,5 @@ import kr.chs.core.model.data.Movie
 fun NetworkMovie.asMovie() = Movie(
     id = id,
     title = title,
-    posterPath = posterPath
+    posterPath = posterPath ?: " "
 )

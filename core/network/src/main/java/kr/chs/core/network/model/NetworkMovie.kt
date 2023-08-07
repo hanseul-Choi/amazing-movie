@@ -14,7 +14,7 @@ data class NetworkMovie(
     @SerializedName("original_title") val originalTitle: String = " ",
     @SerializedName("overview") val overview: String = " ",
     @SerializedName("popularity") val popularity: Double = 0.0,
-    @SerializedName("poster_path") val posterPath: String = " ",
+    @SerializedName("poster_path") val posterPath: String? = " ",
     @SerializedName("release_data") val releaseDate: String = " ",
     @SerializedName("title") val title: String = " ",
     @SerializedName("video") val video: Boolean = false,
