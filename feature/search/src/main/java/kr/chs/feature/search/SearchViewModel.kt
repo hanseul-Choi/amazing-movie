@@ -4,12 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kr.chs.core.common.result.Result
 import kr.chs.core.common.result.asResult
 import kr.chs.core.data.repository.SearchRepository
@@ -26,7 +28,19 @@ class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository
 ) : ViewModel() {
 
-    val searchKeyword = MutableStateFlow(DEFAULT_SEARCH_KEYWORD)
+    // 검색했을 때, 값이 변화해도 다시 호출 시키기위해 SharedFlow로 먼저 생성 -> 이후, Screen에서 감지하기 위해 StateFlow로 변경함
+    private val searchKeyword = MutableSharedFlow<String>(replay = 1)
+    init {
+        searchKeyword.tryEmit(DEFAULT_SEARCH_KEYWORD)
+    }
+
+    val searchKeywordState: StateFlow<String> =
+        searchKeyword
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = DEFAULT_SEARCH_KEYWORD
+            )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val searchUiState: StateFlow<SearchUiState> = searchKeyword.flatMapLatest { keyword ->
@@ -56,7 +70,9 @@ class SearchViewModel @Inject constructor(
     )
 
     fun onSearchKeywordChanged(keyword: String) {
-        searchKeyword.value = keyword
+        viewModelScope.launch {
+            searchKeyword.emit(keyword)
+        }
     }
 }
 

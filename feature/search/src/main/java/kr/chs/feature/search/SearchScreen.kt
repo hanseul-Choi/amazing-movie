@@ -26,7 +26,7 @@ internal fun SearchRoute(
 ) {
 
     val searchUiState by viewModel.searchUiState.collectAsStateWithLifecycle()
-    val searchKeyword by viewModel.searchKeyword.collectAsStateWithLifecycle()
+    val searchKeyword by viewModel.searchKeywordState.collectAsStateWithLifecycle()
 
     SearchScreen(
         onSearchClick = viewModel::onSearchKeywordChanged,
