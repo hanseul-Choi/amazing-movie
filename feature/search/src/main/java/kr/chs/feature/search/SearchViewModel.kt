@@ -1,10 +1,15 @@
 package kr.chs.feature.search
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kr.chs.core.common.result.Result
 import kr.chs.core.common.result.asResult
 import kr.chs.core.data.repository.SearchRepository
@@ -21,35 +26,44 @@ class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository
 ) : ViewModel() {
 
-    // 초기 searchUiState는 empty 상태
-    private val _searchUiState = MutableStateFlow<SearchUiState>(SearchUiState.Empty)
-    val searchUiState: StateFlow<SearchUiState> = _searchUiState
+    val searchKeyword = MutableStateFlow(DEFAULT_SEARCH_KEYWORD)
 
-    private fun searchMovies(keyword: String) {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val searchUiState: StateFlow<SearchUiState> = searchKeyword.flatMapLatest { keyword ->
         searchRepository.getMovies(keyword)
             .asResult()
-            .map { searchResponse ->
-                when(searchResponse) {
+            .map { result ->
+                when (result) {
                     is Result.Success -> {
-                        _searchUiState.value = if(searchResponse.data.isEmpty()) {
+                        if (result.data.results.isEmpty()) {
                             SearchUiState.Empty
                         } else {
-                            SearchUiState.Success(movie = searchResponse.data)
+                            SearchUiState.Success(result.data)
                         }
                     }
-                    is Result.Loading -> {
-                        _searchUiState.value = SearchUiState.Loading
-                    }
                     is Result.Error -> {
-                        _searchUiState.value = SearchUiState.Error
+                        SearchUiState.Error
+                    }
+                    Result.Loading -> {
+                        SearchUiState.Loading
                     }
                 }
             }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = SearchUiState.Empty
+    )
+
+    fun onSearchKeywordChanged(keyword: String) {
+        searchKeyword.value = keyword
     }
 }
 
+private const val DEFAULT_SEARCH_KEYWORD = ""
+
 sealed interface SearchUiState {
-    data class Success(val movie: List<BasePagingModel<Movie>>): SearchUiState
+    data class Success(val movie: BasePagingModel<Movie>): SearchUiState
     object Error: SearchUiState
     object Loading: SearchUiState
     object Empty: SearchUiState

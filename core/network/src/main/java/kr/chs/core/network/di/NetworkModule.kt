@@ -26,7 +26,7 @@ object NetworkModule {
     fun provideTMDBTokenInterceptor() : Interceptor = Interceptor { chain ->
         with(chain) {
             val newRequest = request().newBuilder()
-                .addHeader("Authorization", "Bearer ${BuildConfig.TMDB_API_KEY}")
+                .addHeader("Authorization", "Bearer ${BuildConfig.TMDB_TOKEN}")
                 .build()
             proceed(newRequest)
         }

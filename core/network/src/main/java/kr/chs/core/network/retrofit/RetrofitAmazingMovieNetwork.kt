@@ -20,7 +20,7 @@ private interface RetrofitAmazingMovieApi {
     @GET("3/search/movie")
     suspend fun getMovies(
         @Query("keyword") keyword: String
-    ) : List<BasePagingNetworkModel<NetworkMovie>>
+    ) : BasePagingNetworkModel<NetworkMovie>
 }
 
 private const val amazingMovieBaseUrl = BuildConfig.MOVIE_BASE_URL
@@ -36,7 +36,7 @@ class RetrofitAmazingMovieNetwork @Inject constructor(
         .build()
         .create(RetrofitAmazingMovieApi::class.java)
 
-    override fun getMovies(keyword: String): Flow<List<BasePagingNetworkModel<NetworkMovie>>> =
+    override fun getMovies(keyword: String): Flow<BasePagingNetworkModel<NetworkMovie>> =
         flow {
             val movieData = networkApi.getMovies(keyword)
             emit(movieData)

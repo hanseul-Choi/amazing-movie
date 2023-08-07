@@ -5,7 +5,5 @@ import kr.chs.core.model.data.Movie
 import kr.chs.core.model.data.base.BasePagingModel
 
 interface SearchRepository {
-    val movieData: Flow<Movie>
-
-    fun getMovies(keyword: String): Flow<List<BasePagingModel<Movie>>>
+    fun getMovies(keyword: String): Flow<BasePagingModel<Movie>>
 }
