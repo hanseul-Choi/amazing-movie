@@ -5,5 +5,5 @@ import kr.chs.core.model.data.Movie
 import kr.chs.core.model.data.base.BasePagingModel
 
 interface SearchRepository {
-    fun getMovies(keyword: String): Flow<BasePagingModel<Movie>>
+    fun getMovies(query: String): Flow<BasePagingModel<Movie>>
 }

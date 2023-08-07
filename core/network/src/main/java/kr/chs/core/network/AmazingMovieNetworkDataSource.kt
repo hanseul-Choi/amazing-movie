@@ -5,5 +5,5 @@ import kr.chs.core.network.model.BasePagingNetworkModel
 import kr.chs.core.network.model.NetworkMovie
 
 interface AmazingMovieNetworkDataSource {
-    fun getMovies(keyword: String): Flow<BasePagingNetworkModel<NetworkMovie>>
+    fun getMovies(query: String): Flow<BasePagingNetworkModel<NetworkMovie>>
 }

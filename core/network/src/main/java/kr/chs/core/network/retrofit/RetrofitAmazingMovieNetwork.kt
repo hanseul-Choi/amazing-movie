@@ -19,7 +19,7 @@ import javax.inject.Singleton
 private interface RetrofitAmazingMovieApi {
     @GET("3/search/movie")
     suspend fun getMovies(
-        @Query("keyword") keyword: String
+        @Query("query") query: String
     ) : BasePagingNetworkModel<NetworkMovie>
 }
 
@@ -36,9 +36,9 @@ class RetrofitAmazingMovieNetwork @Inject constructor(
         .build()
         .create(RetrofitAmazingMovieApi::class.java)
 
-    override fun getMovies(keyword: String): Flow<BasePagingNetworkModel<NetworkMovie>> =
+    override fun getMovies(query: String): Flow<BasePagingNetworkModel<NetworkMovie>> =
         flow {
-            val movieData = networkApi.getMovies(keyword)
+            val movieData = networkApi.getMovies(query)
             emit(movieData)
         }.flowOn(Dispatchers.IO)
 }
