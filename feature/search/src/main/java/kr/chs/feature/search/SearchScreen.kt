@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,6 +22,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -40,10 +40,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kr.chs.core.designsystem.icon.AppIcons
+import kr.chs.core.designsystem.theme.AmazingMovieTheme
 import kr.chs.core.model.data.Movie
 
 @Composable
@@ -158,7 +161,7 @@ private fun SearchTopBar(
                 }
             },
             colors = TextFieldDefaults.textFieldColors( // Todo : Theme를 통해 Color 변경
-                containerColor = Color.LightGray,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
                 focusedIndicatorColor = Color.DarkGray,
                 unfocusedIndicatorColor = Color.LightGray,
             ),
@@ -185,3 +188,16 @@ fun LazyListScope.TestBody(
         Text(text = movie.title)
     },
 )
+
+@Preview(
+    showBackground = true,
+)
+@Composable
+private fun SearchScreenPreview(
+    @PreviewParameter(SearchUiStatePreviewParameterProvider::class)
+    searchUiState: SearchUiState,
+) {
+    AmazingMovieTheme {
+        SearchScreen(searchUiState = searchUiState,)
+    }
+}
