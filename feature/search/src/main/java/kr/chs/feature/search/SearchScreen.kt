@@ -82,12 +82,13 @@ internal fun SearchScreen(
             modifier = Modifier.height(16.dp)
         )
 
-        // Todo : SearchTopBar 구현 - toss 검색 부분 참고
+        // Todo : SearchTopBar 상단 고정
         SearchTopBar(
             onSearchClick = onSearchClick,
         )
 
         // Todo : 이 부분은 SearchResultBody로 표현 -> EmptySearchResultBody, SearchResultBody, SearchNotReadyBody
+        // Todo : 이 부분만 스크롤될 수 있도록 조정
         LazyColumn(
             state = state,
             modifier = modifier,
