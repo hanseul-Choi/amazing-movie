@@ -53,6 +53,7 @@ import kr.chs.core.designsystem.icon.AppIcons
 import kr.chs.core.designsystem.theme.*
 import kr.chs.core.model.data.Movie
 
+// Todo : 네비게이션 조정 시 상태 저장이 안되어 있음
 @Composable
 internal fun SearchRoute(
     viewModel: SearchViewModel = hiltViewModel()
