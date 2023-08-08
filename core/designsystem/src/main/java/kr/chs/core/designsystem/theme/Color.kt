@@ -25,3 +25,7 @@ internal val Pink80 = Color(0xFFEFB8C8)
 
 internal val Green40 = Color(0xFF006D36)
 internal val Green90 = Color(0xFF5AFF9D)
+
+val GrayAB = Color(0xFFABB5BD)
+val GrayD3 = Color(0xFFD3D3D3)
+val GrayE9 = Color(0xFFE9ECEF)

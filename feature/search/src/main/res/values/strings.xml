@@ -4,4 +4,5 @@
 
     <string name="search_hint_text">키워드를 입력해주세요(ex. batman)</string>
     <string name="search_description_text">검색 버튼 아이콘</string>
+    <string name="clear_description_text">내용 삭제 아이콘</string>
 </resources>

@@ -22,7 +22,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -35,7 +34,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -46,7 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kr.chs.core.designsystem.icon.AppIcons
-import kr.chs.core.designsystem.theme.AmazingMovieTheme
+import kr.chs.core.designsystem.theme.*
 import kr.chs.core.model.data.Movie
 
 @Composable
@@ -130,8 +134,16 @@ private fun SearchTopBar(
     onSearchClick: (String) -> Unit,
 ) {
     var text by remember { mutableStateOf("") }
-    val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    // Search Trigger
+    val onSearchExplicitlyTriggered = {
+        onSearchClick(text)
+
+        keyboardController?.hide()
+        focusManager.clearFocus()
+    }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -141,16 +153,26 @@ private fun SearchTopBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .clip(RoundedCornerShape(16.dp)),
+                .clip(RoundedCornerShape(16.dp))
+                .onKeyEvent {// 엔터키 감지
+                    if(it.key == Key.Enter) {
+                        onSearchExplicitlyTriggered()
+                        true
+                    } else {
+                        false
+                    }
+                },
             placeholder = {
                 Text(
                     text = stringResource(id = R.string.search_hint_text),
-                    color = Color.DarkGray,
+                    color = GrayAB,
                 )
             },
             leadingIcon = {
                 IconButton(
-                    onClick = { onSearchClick(text) },
+                    onClick = {
+                        onSearchExplicitlyTriggered()
+                    },
                 ) {
                     Icon(
                         imageVector = AppIcons.SearchBar,
@@ -160,21 +182,37 @@ private fun SearchTopBar(
                     )
                 }
             },
+            trailingIcon= {
+                if(text.isNotEmpty()) {
+                    IconButton(
+                        onClick = { text = "" },
+                    ) {
+                        Icon(
+                            imageVector = AppIcons.Clear,
+                            contentDescription = stringResource(
+                                id = R.string.clear_description_text
+                            ),
+                        )
+                    }
+                }
+            },
             colors = TextFieldDefaults.textFieldColors( // Todo : Theme를 통해 Color 변경
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                focusedIndicatorColor = Color.DarkGray,
-                unfocusedIndicatorColor = Color.LightGray,
+                containerColor = GrayE9,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
             ),
             value = text,
             onValueChange = { text = it },
             singleLine = true,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-            keyboardActions = KeyboardActions(onSearch = {
-                onSearchClick(text)
-
-                keyboardController?.hide()
-                focusManager.clearFocus()
-            }),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    onSearchExplicitlyTriggered()
+                }
+            ),
         )
     }
 }
