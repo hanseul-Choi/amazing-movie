@@ -27,7 +27,15 @@ class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository
 ) : ViewModel() {
 
-    // 검색했을 때, 값이 변화해도 다시 호출 시키기위해 SharedFlow로 먼저 생성 -> 이후, Screen에서 감지하기 위해 StateFlow로 변경함
+    /**
+     *  SharedFlow vs StateFlow
+     *
+     *  StateFlow : 항상 현재 값을 가짐, 반드시 초기 값을 가져야 한다. 이전 값이 동일하다면 동작하지 않는다.
+     *  SharedFlow : replay 기능 탑재, 초기 값을 설정할 필요가 없다. 여러 값을 재시작할 수 있다.
+     *
+     *  SharedFlow buffer 개념 숙지
+     */
+    // 검색했을 때, 값이 변화해도 다시 호출 시키기 위해 SharedFlow로 먼저 생성 -> 이후, Screen에서 감지하기 위해 StateFlow로 변경함
     private val searchQuery = MutableSharedFlow<String>(replay = 1)
     init {
         searchQuery.tryEmit(DEFAULT_SEARCH_KEYWORD)
