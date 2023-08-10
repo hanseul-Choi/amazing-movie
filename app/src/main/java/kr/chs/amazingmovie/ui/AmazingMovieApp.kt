@@ -42,8 +42,9 @@ fun AmazingMovieApp() {
                     navHostController.navigate(destination.route) {
                         popUpTo(navHostController.graph.startDestinationId) {
                             saveState = true
-                            inclusive = false
                         }
+                        launchSingleTop = true
+                        restoreState = true
                     }
                 },
                 currentDestination = backStackEntry?.destination
