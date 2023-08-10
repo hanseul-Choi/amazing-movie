@@ -52,6 +52,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kr.chs.core.designsystem.icon.AppIcons
 import kr.chs.core.designsystem.theme.*
 import kr.chs.core.model.data.Movie
+import kr.chs.core.ui.DevicePreviews
 
 @Composable
 internal fun SearchRoute(
@@ -228,9 +229,7 @@ fun LazyListScope.TestBody(
     },
 )
 
-@Preview(
-    showBackground = true,
-)
+@DevicePreviews
 @Composable
 private fun SearchScreenPreview(
     @PreviewParameter(SearchUiStatePreviewParameterProvider::class)
