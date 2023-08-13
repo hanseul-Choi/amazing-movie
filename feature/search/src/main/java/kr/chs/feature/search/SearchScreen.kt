@@ -34,8 +34,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
@@ -44,7 +42,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -52,7 +49,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kr.chs.core.designsystem.icon.AppIcons
 import kr.chs.core.designsystem.theme.*
 import kr.chs.core.model.data.Movie
+import kr.chs.core.model.data.base.BasePagingModel
 import kr.chs.core.ui.DevicePreviews
+import kr.chs.core.ui.SearchUiStatePreviewParameterProvider
 
 @Composable
 internal fun SearchRoute(
@@ -233,9 +232,13 @@ fun LazyListScope.TestBody(
 @Composable
 private fun SearchScreenPreview(
     @PreviewParameter(SearchUiStatePreviewParameterProvider::class)
-    searchUiState: SearchUiState,
+    movieData: BasePagingModel<Movie>,
 ) {
     AmazingMovieTheme {
-        SearchScreen(searchUiState = searchUiState,)
+        SearchScreen(
+            searchUiState = SearchUiState.Success(
+                movie = movieData
+            )
+        )
     }
 }
