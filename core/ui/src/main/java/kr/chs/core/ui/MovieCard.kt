@@ -18,7 +18,7 @@ import kr.chs.core.model.data.base.BasePagingModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieCardResource(
-    movieCardUiState: MovieCardUiState,
+    movie: Movie,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -30,21 +30,22 @@ fun MovieCardResource(
         ),
         modifier = modifier,
     ) {
-        Column() {
+        Column {
             // Todo: 이미지 넣기 - Rounded 16, 총 크기 60%정도?
+//            if()
             // Todo: 관람 등급(이미지), 제목(10자이상 넘어가면 elipse처리), 출시일, 평점(별모양 + 점수), 아래 자세히 보기 버튼 - 롯데 시네마 앱 참고
             Text(text = "test")
         }
     }
 }
 
-// 여기서 Movie Content의 ui를 다루는게 맞아보임
-sealed interface MovieCardUiState {
-    object Loading: MovieCardUiState
-    data class Success(
-        val movie: Movie
-    ): MovieCardUiState
-}
+// Todo : UiState는 리스트로 표현되는 곳에서 관리하는게 맞아보임
+//sealed interface MovieCardUiState {
+//    object Loading: MovieCardUiState
+//    data class Success(
+//        val movie: Movie
+//    ): MovieCardUiState
+//}
 
 @Preview
 @Composable
@@ -53,9 +54,7 @@ fun MovieCardContentPreview(
     movieData: BasePagingModel<Movie>,
 ) {
     MovieCardResource(
-        movieCardUiState = MovieCardUiState.Success(
-            movie = movieData.results[0]
-        ),
+        movie = movieData.results[0],
         onClick = {},
     )
 }
